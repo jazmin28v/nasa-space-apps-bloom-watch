@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+    <!-- Font Awesome  iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
+                <div class="user-info">
+                    <p class="user-name">usuario </p>
+                    <p class="user-role">Agricultor</p>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-item"><i class="fas fa-home"></i> Text</a></li>
+                    <li><a href="#" class="nav-item"><span class="nav-icon-at">AT</span> Text</a></li>
+                    <li><a href="#" class="nav-item active"><i class="fas fa-shopping-basket"></i>Text</a></li>
+                    <li><a href="#" class="nav-item"><i class="fas fa-chart-bar"></i> Text</a></li>
+                    <li><a href="#" class="nav-item"><i class="fas fa-box-open"></i> Text</a></li>
+                    <li><a href="#" class="nav-item"><i class="fas fa-tag"></i> Text</a></li>
+                    <li><a href="#" class="nav-item"><i class="fas fa-user"></i> Text</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item"><i class="fas fa-cog"></i> Setting</a>
+                <a href="#" class="nav-item"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-title">
+                    <h1>Title</h1>
+                    <p>Subtitle</p>
+                </div>
+                <div class="logo">
+                    <img src="img" alt="Logo">
+                </div>
+            </header>
+
+            <!-- Estatus-->
+            <section class="sales-overview">
+                <div class="tabs">
+                    <button class="tab-button active">All</button>
+                    <button class="tab-button">Pending</button>
+                    <button class="tab-button">Completed</button>
+                </div>
+
+                <div class="overview-content">
+                    <div class="chart-container">
+                        <!-- Placeholder para el gráfico -->
+                        <img src="map" alt="map">
+                    </div>
+                </div>
+                <div class="metrics-cards-bottom">
+                    <div class="metric-card">
+                        <div class="icon-placeholder green"></div>
+                        <div class="card-text">
+                            <h3>Info</h3>
+                            <p>Info</p>
+                        </div>
+                    </div>
+                    <div class="metric-card trending-now">
+                        <div class="icon-placeholder green"></div>
+                        <div class="icon-placeholder green"></div>
+                        <div class="icon-placeholder green"></div>
+                        <div class="card-text">
+                            <h3>Info</h3>
+                            <p>Info</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="icon-placeholder green"></div>
+                        <div class="icon-placeholder green"></div>
+                        <div class="icon-placeholder green"></div>
+                        <div class="card-text">
+                            <h3>Info</h3>
+                            <p>Info</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product List Section -->
+            <section class="product-list-and-calendar">
+                <div class="product-list-container">
+                    <div class="product-list-header">
+                        <h2>Productos</h2>
+                        <div class="pagination">
+                            <i class="fas fa-chevron-left"></i>
+                            <span>1</span>
+                            <span>2</span>
+                            <span>3</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="products-grid">
+                        <!-- Ejemplo de tarjeta de producto -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="https://via.placeholder.com/200x150?text=Oversized+T-shirt">
+                            </div>
+                            <p class="product-price">img</p>
+                            <p class="product-name">result</p>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="https://via.placeholder.com/200x150?text=Jeans">
+                            </div>
+                            <p class="product-price">img</p>
+                            <p class="product-name">result</p>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="https://via.placeholder.com/200x150?text=Hoodie">
+                            </div>
+                            <p class="product-price">img</p>
+                            <p class="product-name">result</p>
+                        </div>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="https://via.placeholder.com/200x150?text=Formal+Blazer">
+                            </div>
+                            <p class="product-price">img</p>
+                            <p class="product-name">result</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendario rango de fechas  -->
+                <div class="date-range-picker-container">
+                    <div class="date-inputs">
+                        <div class="date-input-group">
+                            <label for="startDate">Fecha de Inicio:</label>
+                            <input type="text" id="startDate" readonly placeholder="Seleccionar fecha">
+                        </div>
+                        <div class="date-input-group">
+                            <label for="endDate">Fecha de Fin:</label>
+                            <input type="text" id="endDate" readonly placeholder="Seleccionar fecha">
+                        </div>
+                    </div>
+
+                    <div class="calendar-popup" id="calendarPopup">
+                        <div class="calendar-header">
+                            <button id="prevMonth">&lt;</button>
+                            <h3 id="monthYear"></h3>
+                            <button id="nextMonth">&gt;</button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <div>Dom</div>
+                            <div>Lun</div>
+                            <div>Mar</div>
+                            <div>Mié</div>
+                            <div>Jue</div>
+                            <div>Vie</div>
+                            <div>Sáb</div>
+                        </div>
+                        <div class="calendar-days" id="calendarDays">
+                            <!-- Los días se generarán aquí con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script para el calendario y la lógica de selección de fechas -->
+    <script src="script.js"></script>
+</body>
+</html>
