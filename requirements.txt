@@ -1,7 +1,6 @@
 python-dotenv
 psycopg2-binary
-
-dafruit-ampy==1.1.0
+adafruit-ampy==1.1.0
 affine==2.4.0
 anywidget==0.9.18
 asttokens==3.0.0
