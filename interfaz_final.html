@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Estrés Hídrico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .input-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #e55a2b;
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: none;
+        }
+        
+        .alert-header {
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alert-moderado {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        
+        .alert-severo {
+            background: #F8D7DA;
+            color: #721C24;
+        }
+        
+        .alert-optimo {
+            background: #D4EDDA;
+            color: #155724;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        
+        .section-content {
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .diagnostic-item, .recommendation-item, .impact-item {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+        
+        .diagnostic-item:before {
+            content: "-";
+            position: absolute;
+            left: 0;
+        }
+        
+        .recommendation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .recommendation-item:before {
+            content: "✅";
+            min-width: 20px;
+        }
+        
+        .impact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .impact-item.prevent:before {
+            content: "📊";
+        }
+        
+        .impact-item.roi:before {
+            content: "💰";
+        }
+        
+        .metrics {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+        }
+        
+        .loader {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #FF6B35;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .example-coords {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-card">
+            <h1>🌾 Análisis de Estrés Hídrico</h1>
+            
+            <div class="input-group">
+                <label>📍 Latitud</label>
+                <input type="number" id="latitud" step="0.000001" placeholder="25.6866" value="25.6866">
+                <div class="example-coords">Ejemplo: Monterrey, México</div>
+            </div>
+            
+            <div class="input-group">
+                <label>📍 Longitud</label>
+                <input type="number" id="longitud" step="0.000001" placeholder="-100.3161" value="-100.3161">
+            </div>
+            
+            <div class="input-group">
+                <label>📅 Fecha (opcional)</label>
+                <input type="text" id="fecha" placeholder="dd/mm/yyyy (dejar vacío para hoy)">
+            </div>
+            
+            <button onclick="analizar()" id="btnAnalizar">🔍 Analizar Campo</button>
+            
+            <div class="error" id="error"></div>
+            
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+                <div>Obteniendo datos satelitales...</div>
+            </div>
+        </div>
+        
+        <div class="result-card" id="resultado">
+            <div id="alertHeader"></div>
+            
+            <div class="content">
+                <div class="section">
+                    <div class="section-title">Diagnóstico:</div>
+                    <div class="section-content" id="diagnostico"></div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Recomendación:</div>
+                    <div class="section-content" id="recomendacion"></div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">Impacto esperado:</div>
+                    <div class="section-content" id="impacto"></div>
+                </div>
+                
+                <div class="metrics">
+                    <div class="section-title">Métricas Técnicas</div>
+                    <div id="metricas"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function analizar() {
+            const latitud = parseFloat(document.getElementById('latitud').value);
+            const longitud = parseFloat(document.getElementById('longitud').value);
+            const fecha = document.getElementById('fecha').value || null;
+            
+            // Validar
+            if (isNaN(latitud) || isNaN(longitud)) {
+                mostrarError('Por favor ingresa coordenadas válidas');
+                return;
+            }
+            
+            // Ocultar resultados previos y mostrar loader
+            document.getElementById('resultado').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('btnAnalizar').disabled = true;
+            
+            try {
+                // Llamar a la API
+                const response = await fetch('http://localhost:8000/analizar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        latitud: latitud,
+                        longitud: longitud,
+                        fecha: fecha
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error en la API');
+                }
+                
+                const resultado = await response.json();
+                mostrarResultado(resultado);
+                
+            } catch (error) {
+                mostrarError('❌ Error: No se pudo conectar con la API. Asegúrate de que esté corriendo.');
+            } finally {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('btnAnalizar').disabled = false;
+            }
+        }
+        
+        function mostrarResultado(data) {
+            // Determinar clase de alerta
+            let alertClass = 'alert-optimo';
+            if (data.titulo === 'MODERADO') {
+                alertClass = 'alert-moderado';
+            } else if (data.titulo === 'CRÍTICO') {
+                alertClass = 'alert-severo';
+            }
+            
+            // Header de alerta
+            document.getElementById('alertHeader').innerHTML = `
+                <div class="alert-header ${alertClass}">
+                    ${data.nivel_alerta}
+                </div>
+            `;
+            
+            // Diagnóstico
+            const diagnosticoHTML = data.diagnostico.map(item => 
+                `<div class="diagnostic-item">${item}</div>`
+            ).join('');
+            document.getElementById('diagnostico').innerHTML = diagnosticoHTML;
+            
+            // Recomendación
+            const recomendacionHTML = data.recomendacion.map(item => 
+                `<div class="recommendation-item">${item}</div>`
+            ).join('');
+            document.getElementById('recomendacion').innerHTML = recomendacionHTML;
+            
+            // Impacto
+            const impactoHTML = data.impacto.map((item, index) => {
+                const clase = index === 0 ? 'prevent' : 'roi';
+                return `<div class="impact-item ${clase}">${item}</div>`;
+            }).join('');
+            document.getElementById('impacto').innerHTML = impactoHTML;
+            
+            // Métricas técnicas
+            const metricas = data.metricas_tecnicas;
+            document.getElementById('metricas').innerHTML = `
+                <div class="metric-row">
+                    <span class="metric-label">NDVI</span>
+                    <span class="metric-value">${metricas.ndvi.toFixed(3)}</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">EVI</span>
+                    <span class="metric-value">${metricas.evi.toFixed(3)}</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Humedad del Suelo</span>
+                    <span class="metric-value">${metricas.soil_humidity.toFixed(1)} mm</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">LST</span>
+                    <span class="metric-value">${metricas.lst.toFixed(1)} °C</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Déficit Hídrico</span>
+                    <span class="metric-value">${(metricas.deficit_hidrico * 100).toFixed(0)}%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Tendencia NDVI (14d)</span>
+                    <span class="metric-value">${metricas.ndvi_tendencia_14d > 0 ? '+' : ''}${metricas.ndvi_tendencia_14d.toFixed(3)}</span>
+                </div>
+            `;
+            
+            // Mostrar resultado
+            document.getElementById('resultado').style.display = 'block';
+            document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function mostrarError(mensaje) {
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').textContent = mensaje;
+        }
+        
+        // Permitir Enter para analizar
+        document.getElementById('fecha').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                analizar();
+            }
+        });
+    </script>
+</body>
+</html>
