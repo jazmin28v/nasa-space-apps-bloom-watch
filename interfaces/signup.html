@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloomWatch - Sign Up</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('https://i.pinimg.com/originals/0e/8a/92/0e8a9299309e2e458d500be2cc55e09e.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: black;
+    }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        input {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            padding: 15px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+         h2 {
+      font-size: 2rem;
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      background: linear-gradient(90deg,
+        #000,
+        #000,
+        #ffeb3b,
+        #000,
+        #000
+      );
+      background-size: 300%;
+      background-clip: text;           /* ✅ standard property */
+      -webkit-background-clip: text;   /* ✅ for WebKit browsers */
+        color: transparent;              /* ensures text is transparent */
+        -webkit-text-fill-color: transparent; /* for Chrome/Safari */
+        animation: waveColor 4s infinite linear;
+    }
+
+    @keyframes waveColor {
+      0% { background-position: 0%; }
+      100% { background-position: 100%; }
+    }
+
+    /* wave motion of each letter */
+    h2 span {
+      display: inline-block;
+      animation: waveMotion 1.2s ease-in-out infinite;
+    }
+
+    @keyframes waveMotion {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* delays for each letter */
+    h2 span:nth-child(1) { animation-delay: 0s; }
+    h2 span:nth-child(2) { animation-delay: 0.05s; }
+    h2 span:nth-child(3) { animation-delay: 0.1s; }
+    h2 span:nth-child(4) { animation-delay: 0.15s; }
+    h2 span:nth-child(5) { animation-delay: 0.2s; }
+    h2 span:nth-child(6) { animation-delay: 0.25s; }
+    h2 span:nth-child(7) { animation-delay: 0.3s; }
+    h2 span:nth-child(8) { animation-delay: 0.35s; }
+    h2 span:nth-child(9) { animation-delay: 0.4s; }
+    h2 span:nth-child(10) { animation-delay: 0.45s; }
+    h2 span:nth-child(11) { animation-delay: 0.5s; }
+    h2 span:nth-child(12) { animation-delay: 0.55s; }
+    h2 span:nth-child(13) { animation-delay: 0.6s; }
+    h2 span:nth-child(14) { animation-delay: 0.65s; }
+    h2 span:nth-child(15) { animation-delay: 0.7s; }
+    h2 span:nth-child(16) { animation-delay: 0.75s; }
+    h2 span:nth-child(17) { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create your account</h2>
+        <input type="text" placeholder="Name">
+        <input type="username" placeholder="Username">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button class="btn">Sign Up</button>
+    </div>
+
+
+<script>
+
+</script>
+
+</body>
+</html>

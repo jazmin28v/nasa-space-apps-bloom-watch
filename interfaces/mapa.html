@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>Delimitar Cultivos</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <style>
+        #map { height: 100vh; width: 100%; }
+        .info { 
+            position: absolute; 
+            top: 10px; left: 10px; 
+            background: white; 
+            padding: 10px; 
+            z-index: 1000; 
+            border-radius: 5px; 
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        #clearBtn {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: #007b5e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #clearBtn:hover {
+            background-color: #00a86b;
+        }
+    </style>
+    </head>
+    <body>
+        <div id="map" ></div>
+        <div class ="info" id="info">
+            Haz click en el mapa para agregar puntos ( máx 6).<br>
+        <button id="clearBtn" onclick="resetPolygon()">🗑 Limpiar área</button></div>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <script>
+           
+    var map = L.map('map').setView([20, -100], 5);
+
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var points = [];
+    var polygon = null;
+
+    map.on('click', function(e) {
+        if(points.length >= 6){
+            alert("Ya alcanzaste el máximo de 6 puntos.");
+            return;
+        }
+
+       
+        points.push([e.latlng.lat, e.latlng.lng]);
+        L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+
+      
+        if(polygon) map.removeLayer(polygon);
+        
+        polygon = L.polygon(points, {color: 'green'}).addTo(map);
+
+        console.log("Coordenadas actuales del polígono:", points);
+    });
+
+    function resetPolygon(){
+        points = [];
+        if(polygon){
+            map.removeLayer(polygon);
+        }
+        map.eachLayer(function(layer){
+            if(layer instanceof L.Marker) map.removeLayer(layer);
+        });
+    }
+        </script>
+    </body>
+    
+</html>

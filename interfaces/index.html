@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoFenoLabs</title>
+    
+  <style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2)), 
+                    url('https://i.pinimg.com/originals/0e/8a/92/0e8a9299309e2e458d500be2cc55e09e.jpg');
+        background-size: cover;
+        background-position: center;
+        font-family: Arial, sans-serif;
+        color: white;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: left;
+        padding-top:90px;  
+        padding-left: 100px;
+    }
+
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding:30px 40px;
+      box-sizing: border-box;
+      z-index: 1000;
+    }
+
+   
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 25px;
+      position: relative;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.25rem;
+      padding: 5px 0;
+      transition: color 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    nav ul li a:hover {
+      color: #ffeb3b;
+    }
+
+    .indicator {
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #ffeb3b;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+
+    h1 {
+      font-size: 3.5rem;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+.btn {
+    position: relative;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #f6a800;
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+    background-color: #f6a800;
+    transform: translateY(-2px);
+}
+
+.sprout {
+    display: inline-block;
+    margin-left: 10px;
+    transform: scale(0);
+    transform-origin: bottom center;
+    transition: transform 0.4s ease-out;
+}
+
+.btn:hover .sprout {
+    transform: scale(1.2) rotate(-10deg);
+}
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 55px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo"></div>
+    <ul id="menu">
+      <li><a href="#">About Us</a></li>
+      <li><a href="signin.html">Sign In</a></li>
+      <div class="indicator" id="indicator"></div>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>GeoFenoLab</h1>
+    <p>Monitor fields in real time. From the satellites to your field: monitor blooming, predict changes, and manage your resources with GeoFenoLab.</p>
+    <a href="signup.html" class="btn">Bloom your journey!<span class="sprout">🌱</span>
+  </a>
+  </div>
+
+  <script>
+   
+    const menu = document.getElementById('menu');
+    const indicator = document.getElementById('indicator');
+    const links = menu.querySelectorAll('li a');
+
+    links.forEach(link => {
+      link.addEventListener('mouseenter', (e) => {
+        const rect = e.target.getBoundingClientRect();
+        const menuRect = menu.getBoundingClientRect();
+        indicator.style.width = `${rect.width}px`;
+        indicator.style.left = `${rect.left - menuRect.left}px`;
+      });
+
+      link.addEventListener('mouseleave', () => {
+        indicator.style.width = `0px`;
+      });
+    });
+  </script>
+
+</body>
+</html>
